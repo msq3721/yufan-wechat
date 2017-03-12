@@ -1,0 +1,147 @@
+<% include ../nav/header.ejs %>
+<style>
+    body{
+        margin-left: 1rem !important;
+        margin-top: 0.5rem !important;
+    }
+    .mylabel {
+        font-size: 1.1rem;
+    }
+
+    tr {
+        height: 2rem;
+    }
+
+    textarea {
+        font-size: 1rem;
+        margin-top: 1rem !important;
+    }
+    .border-active{
+        background-color:#5DAC81;
+        color: #ffffff;
+    }
+    .border-active:after {
+        border-color: #5DAC81;
+
+    }
+</style>
+<h1>口味备注</h1>  <div class="aui-btn aui-btn-success" id="save">保存</div>
+<table>
+    <tr>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="hot_1">不吃辣</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="hot_2">少放辣</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="hot_3">多放辣</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="vinegar_1">不吃醋</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="vinegar_2">少放醋</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="vinegar_3">多放醋</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="garlic_1">不吃蒜</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="onion_1">不吃洋葱</div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="scallion_1">不吃葱</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="salt_2">少放盐</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="rice_2">少放饭</div>
+        </td>
+        <td>
+            <div class="aui-label aui-label-outlined mylabel" id="rice_3">多放饭</div>
+        </td>
+    </tr>
+</table>
+</hr>
+<div >
+    <textarea placeholder="请输入补充说明（最多20字）" maxlength=20 rows="2" id="remark"></textarea>
+</div>
+
+<script type="text/javascript" src="/aui/script/api.js"></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js"></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.slim.min.js"></script>
+<script>
+    $(function(){
+        var map ={
+            userid:"",
+            hot:0,
+            vinegar:0,
+            rice:0,
+            garlic:0,
+            onion:0,
+            scallion:0,
+            salt:1,
+            remark:""
+        };
+        let call = '<%=call%>';
+        if (call === '2'){
+            $("#hot_<%=data.hot%>").toggleClass("border-active");
+            map["hot"] = '<%=data.hot%>';
+            $("#vinegar_<%=data.vinegar%>").toggleClass("border-active");
+            map["vinegar"] = '<%=data.vinegar%>';
+            $("#rice_<%=data.rice%>").toggleClass("border-active");
+            map["rice"] = '<%=data.rice%>';
+            $("#garlic_<%=data.garlic%>").toggleClass("border-active");
+            map["garlic"] = '<%=data.garlic%>';
+            $("#onion_<%=data.onion%>").toggleClass("border-active");
+            map["onion"] = '<%=data.onion%>';
+            $("#scallion_<%=data.scallion%>").toggleClass("border-active");
+            map["scallion"] = '<%=data.scallion%>';
+            $("#salt_<%=data.salt%>").toggleClass("border-active");
+            map["salt"] = '<%=data.salt%>';
+
+           $("#remark").val('<%=data.remark%>');
+            map['remark'] = '<%=data.remark%>';
+        }
+        $(".mylabel").click(function () {
+            console.log(this.id);
+                if(this.id.indexOf('hot')>=0){
+                    $("div[id^='hot']").removeClass("border-active");
+                    $(this).toggleClass("border-active");
+                    console.log(this.id.split('_')[0]);
+                    console.log(this.id.split('_')[1]);
+                    map[this.id.split('_')[0]] = this.id.split('_')[1];
+                }
+            else if(this.id.indexOf('vinegar')>=0){
+                    $("div[id^='vinegar']").removeClass("border-active");
+                    $(this).toggleClass("border-active");
+                    map[this.id.split('_')[0]] = this.id.split('_')[1];
+                }
+            else if(this.id.indexOf('rice')>=0){
+                    $("div[id^='rice']").removeClass("border-active");
+                    $(this).toggleClass("border-active");
+                    map[this.id.split('_')[0]] = this.id.split('_')[1];
+                }
+            else{
+                    $(this).toggleClass("border-active");
+                    map[this.id.split('_')[0]] = this.id.split('_')[1];
+                }
+        });
+        $("#save").click(function(){
+            var rema = $("#remark").val();
+            map['remark'] = rema;
+            var m = JSON.stringify(map);
+            location.href='/wx/getflavor?map='+m+'&type=<%=type%>';
+        })
+    })
+
+</script>
+<% include ../nav/footer.ejs %>

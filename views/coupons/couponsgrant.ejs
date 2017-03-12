@@ -1,0 +1,125 @@
+<% include ../subpro/nav/header.ejs %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/component.css">
+<style>
+    .title{
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .txt{
+        padding: 0rem 1.5rem;
+        -webkit-border-radius: 2rem;
+        -moz-border-radius: 2rem;
+        border-radius: 2rem;
+        width: 90%;
+        position: relative;
+        left: 5%;
+        border-right: #ffffff 0px solid;
+        border-top: #ffffff 0px solid;
+        border-left: #ffffff 0px solid;
+        border-bottom: #c0c0c0 1px solid;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+
+    }
+    .btn{
+        margin-top: 0.5rem;
+    }
+    .button {
+        height:2rem;
+        width: 7rem;
+        display: inline-block;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ie-border-radius: 6px;
+        border-radius: 6px;
+        padding: 0.2rem 1rem;
+        text-shadow: rgba(0,0,0,.5) 0px -1px 0px;
+        font-size: 18px;
+        font-weight: 700;
+        -webkit-transition-property: background-color;
+        -webkit-transition-duration: .15s;
+        -webkit-transition-timing-function: ease-in-out;
+        cursor: pointer;
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+    .button:active {
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+    .button span {
+        vertical-align: middle;
+    }
+    .lightbg-green {
+        background-color: #78896d;
+        color: #e2f1d8;
+        -webkit-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+        -moz-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+        -ie-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+        box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+    }
+    .lightbg-green:hover {
+        background-color: #8b9f7f;
+    }
+    .lightbg-green:active {
+        background-color: #68775f;
+        -webkit-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+        -moz-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+        -ie-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+        box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+    }
+    .lightbg-green .arrow {
+        border-color: transparent transparent transparent #87977a;
+    }
+    body{
+        background-color: rgba(255, 255, 255, 0.9);
+        background-image: url('/aui/image/back1.png');
+    }
+    .all{
+        margin-top: 3rem;
+    }
+    h1,h2,button,img{
+        color: rgba(254, 254, 255, 0.9);
+        position: relative;
+    }
+    h1{
+        left:23%;
+    }
+    h2{
+        left:40%;
+    }
+    img{
+        width:70%;
+        left: 15%;
+    }
+    button{
+        left:30%;
+    }
+</style>
+<div class="all">
+<h1>送您一张<%=coupons.discount%>元优惠券</h1>
+<h2><%=coupons.code%></h2>
+    <img src="/aui/image/优惠券.png">
+<button id="sub" class="btn button lightbg-green ">确认领取</button>
+</div>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/notie.js"></script>
+<script>
+$(function(){
+    $("#sub").on('click',function(){
+        $.get('/wx/ca/couponsactivityadd',{code:'<%=coupons.code%>',status:'<%=coupons.status%>'},function(r){
+            if(r.msg ==='OK'){
+                location.href = '/wx/couponspage';
+            }
+            else if(r.msg ==='hasone'){
+                notie.alert(2, '很抱歉，您已经收藏过该类活动优惠券，请期待下次活动', 5);
+            }
+            else{
+
+            }
+        })
+    });
+})
+</script>
+</body>
+</html>

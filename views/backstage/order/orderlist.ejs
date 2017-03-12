@@ -1,0 +1,85 @@
+<% include ../main/navorder.ejs%>
+<h1><%= title %></h1>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>交易号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>手机</th>
+        <th>地区</th>
+        <th>地址</th>
+        <th>下单时间</th>
+        <th>配送时间</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% data.forEach(function(d){%>
+    <tr style="background-color: #90B44B">
+        <td><%=d[0].tradeno%></td>
+        <td><%=d[0].name%></td>
+        <td><%=d[0].sex%></td>
+        <td><%=d[0].mobile%></td>
+        <td><%=d[0].district%></td>
+        <td><%=d[0].site%></td>
+        <td><%=d[0].ordertime%></td>
+        <td><%=d[0].deliverytime%></td>
+        <% if(d[0].status ===1){%>
+        <td>下单成功</td>
+        <td><button type="button" class="btn btn-default" onclick="window.location.href= '/bk/changeorderstatus?id=<%=d[0].orderid%>&status=<%=d[0].status%>';return false">开始制作</button></td>
+        <%}else if (d[0].status ===2){%>
+        <td>制作中</td>
+        <td><button type="button" class="btn btn-default" onclick="window.location.href= '/bk/changeorderstatus?id=<%=d[0].orderid%>&status=<%=d[0].status%>';return false">开始配送</button></td>
+        <%}else if (d[0].status ===3){%>
+        <td>配送中</td>
+        <td><button type="button" class="btn btn-default" onclick="window.location.href= '/bk/changeorderstatus?id=<%=d[0].orderid%>&status=<%=d[0].status%>';return false">确认完成</button></td>
+        <%}else if (d[0].status ===4){%>
+        <td >已完成</td>
+        <td></td>
+        <%}else if (d[0].status ===5){%>
+        <td>取消未退款</td>
+        <td><button type="button" class="btn btn-default" onclick="window.location.href= '/bk/changeorderstatus?id=<%=f.id%>';return false">确认退款</button></td>
+        <%}else if (d[0].status ===6){%>
+        <td></td>
+        <td>取消已退款</td>
+        <%}%>
+    </tr>
+
+        <%for(var i = 0 ;i< d.length;i++){%>
+    <tr>
+        <td><%=i+1%>.菜名</td>
+        <td><%=d[i].productname%></td>
+        <td>数量</td>
+        <td><%=d[i].foodnum%></td>
+        <td>种类</td>
+        <% if(d[i].type ===1){%>
+        <td>早餐</td>
+        <%}else if (d[i].type ===2){%>
+        <td>午晚餐</td>
+        <%}else if (d[i].type ===3){%>
+        <td>轻食</td>
+        <%}else if (d[i].type ===4){%>
+        <td>礼物</td>
+        <%}%>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+        <%}%>
+
+    <tr>
+        <% if ((d[0].flavor != "" && d[0].flavor != undefined && d[0].flavor != null)){%>
+        <td>备注1</td>
+        <td colspan="3"><%=d[0].flavor%></td>
+        <%}%>
+        <% if ((d[0].flavorremark != "" && d[0].flavorremark != undefined && d[0].flavorremark != null)){%>
+        <td>备注2</td>
+        <td colspan="3"><%=d[0].flavorremark%></td>
+        <%}%>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+<% include ../main/footer.ejs %>

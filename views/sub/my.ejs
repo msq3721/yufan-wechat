@@ -1,0 +1,84 @@
+<% include ../subpro/nav/header.ejs %>
+<style type="text/css">
+    .user-info {
+        background-color: #ffffff;
+        padding: 0.75rem 0;
+    }
+    img.avatar {
+        display: block;
+        margin: 0 auto;
+        width: 20%;
+    }
+    .aui-list .aui-list-header {
+        background-color: #ffffff;
+        line-height: 1.2rem;
+    }
+    .aui-list .aui-list-item {
+        background-color: #f8f6ef;
+    }
+</style>
+<section class="aui-content user-info aui-text-center aui-margin-b-15">
+    <img src="/aui/image/liulangnan.png" class="avatar aui-img-round">
+    <h2 class="aui-margin-t-15">诉 <small><i class="aui-iconfont aui-icon-cert aui-text-danger"></i></small></h2>
+</section>
+<section class="aui-content aui-grid aui-margin-b-15">
+    <div class="aui-row">
+        <div class="aui-col-xs-4 aui-border-r" onclick="window.location.href= '/wx/fooddetail?id=<%=f.id%>';return false">
+            <big class="aui-text-warning">0.00<small> 元</small></big>
+            <div class="aui-gird-lable aui-font-size-12">余额</div>
+        </div>
+        <div class="aui-col-xs-4 aui-border-r">
+            <big class="aui-text-danger">0.00<small> 个</small></big>
+            <div class="aui-gird-lable aui-font-size-12">优惠</div>
+        </div>
+        <div class="aui-col-xs-4">
+            <big class="aui-text-success">0.00<small> 分</small></big>
+            <div class="aui-gird-lable aui-font-size-12">积分</div>
+        </div>
+    </div>
+</section>
+<section class="aui-content">
+    <ul class="aui-list aui-list-in aui-margin-b-15">
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-location aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">收货地址</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-like aui-text-danger"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">我的口味</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">积分商城</div>
+                <div class="aui-list-item-right">0元好物在这里</div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-cert aui-text-warning"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">我的饭卡</div>
+                <div class="aui-list-item-right">未开通</div>
+            </div>
+        </li>
+    </ul>
+</section>
+<script type="text/javascript" src="/aui/script/api.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-slide.js"></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.slim.min.js"></script>
+<% include ../subpro/nav/footer.ejs %>

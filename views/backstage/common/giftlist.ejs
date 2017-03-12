@@ -1,0 +1,40 @@
+<% include ../main/navcommom.ejs %>
+<style>
+    img{
+        max-width: 100px;
+        max-height: 100px;
+    }
+</style>
+<h1><%= title %></h1>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>图片</th>
+        <th>名称</th>
+        <th>类型</th>
+        <th>花费积分</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th colspan="2">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% result.forEach(function(r){ %>
+    <tr>
+        <td><img src="/img/<%=r.imgurl%>"></td>
+        <td><%=r.name%></td>
+        <td>
+            <%if(r.type ===4){%>
+            礼物
+            <%}%>
+        </td>
+        <td><%=r.balance%></td>
+        <td><%=r.startdate%></td>
+        <td><%=r.enddate%></td>
+        <td><button type="button" class="btn btn-warning" onclick="window.location.href= '/bk/updategiftpage?id=<%=r.id%>';return false">修改</button></td>
+        <td><button type="button" class="btn btn-danger" onclick="window.location.href= '/bk/delectgift?id=<%=r.id%>';return false">删除</button></td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+<% include ../main/footer.ejs %>

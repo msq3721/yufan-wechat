@@ -1,0 +1,173 @@
+<% include ../nav/header.ejs %>
+<section class="aui-content">
+    <% if ( session.user.cart.length > 0) { %>
+    <h1>购物车总金额：<span class="aui-text-success" id="totprice"><%= session.user.totoalprice %></span></h1>
+    <div class="aui-card-list">
+        <div class="aui-card-list-content">
+            <ul class="aui-list aui-media-list">
+                <% session.user.cart.forEach(function(l){ %>
+                <li class="aui-list-item aui-list-item-middle">
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media" style="width: 3rem;">
+                            <div class="aui-list-item-label">
+                                <% if ( l.checked == 1) { %>
+                                <input class="aui-radio" id="<%= l.id %>" type="checkbox" name="boxs" checked>
+                                <% }else{ %>
+                                <input class="aui-radio" id="<%= l.id %>" type="checkbox" name="boxs">
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title aui-font-size-14">
+                                    <% if ( l.type == 1) { %>
+                                    早餐:
+                                    <% }else if (l.type == 2){ %>
+                                    午晚餐:
+                                    <% }else if (l.type == 2){ %>
+                                    轻食:
+                                    <% } %>
+                                    <%= l.name %>
+                                </div>
+                                <div class="aui-list-item-right" style="width: 5rem">
+                                    <div class="aui-bar-btn-item " id="minus_<%= l.id %>">
+                                        <i class="aui-iconfont aui-icon-minus" style="font-size: 0.4rem"></i>
+                                    </div>
+                                    <div class="aui-bar-btn-item size">
+                                        <input type="number" class="aui-input aui-text-center size"
+                                               readonly="readonly" style="font-size: 0.4rem"
+                                               id="value_<%= l.id %>" value="<%= l.num %>">
+                                    </div>
+                                    <div class="aui-bar-btn-item" id="plus_<%= l.id %>">
+                                        <i class="aui-icon-plus aui-iconfont" style="font-size: 0.4rem"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="aui-list-item-text">
+                                单价:￥<%= l.balance %>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+    <% if(coupons.length>0){%>
+    <ul class="aui-list aui-select-list">
+        <li class="aui-list-header">选择优惠券</li>
+
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <label><input class="aui-radio" id="nocoupons"  onclick="changeCon('noconpous',null,null)" type="radio" name="coupons" checked> 不使用</label>
+            </div>
+        </li>
+        <% coupons.forEach(function(c){%>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <label><input class="aui-radio" id="<%=c.id%>" onclick="changeCon('<%=c.id%>','<%=c.limitprice%>','<%=c.discount%>')" type="radio" name="coupons">
+                    <%if(c.limitprice >0){%>
+                    满<div id="limitp_<%=c.id%>"><%=c.limitprice%></div>元减
+                    <%}%>
+                    <%=c.discount%>元优惠券
+                </label>
+            </div>
+        </li>
+       <% })%>
+
+    <%}%>
+    <% } else { %>
+    <h1>购物车为空</h1>
+    <% } %>
+</section>
+<footer class="aui-bar aui-bar-tab " style="margin-bottom: 2.25rem !important;">
+    <div class="aui-bar-tab-item" tapmode style="width: 35%;">
+        <div class=" aui-text-info">购物车总金额</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode style="width: 15%;">
+        <div class=" aui-text-warning"><span id="totprice"><%= session.user.totoalprice %></span>元</div>
+    </div>
+    <div class="aui-bar-tab-item my-green aui-text-white" tapmode style="width: auto;" id="paychart">现在结算</div>
+</footer>
+<script type="text/javascript" src="/aui/script/api.js"></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js"></script>
+<script type="text/javascript" src="/aui/script/aui-slide.js"></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/notie.js"></script>
+<script>
+    function changeCon(id,limitprice,discount){
+        if(limitprice != null){
+            var tot = parseInt($("#totprice").text());
+            if(tot<limitprice){
+                notie.alert(2, '满减条件不足', 1.5);
+                $("input:radio[name='coupons']").eq(0).attr("checked",true);
+            }
+            else{
+                changeConAjax(id,limitprice,discount);
+            }
+        }
+        else {
+            changeConAjax(id,limitprice,discount);
+        }
+
+    }
+    function changeConAjax(id,limitprice,discount){
+            $.get("/wx/changeconpousbycart", {id:id,limitprice:limitprice,discount:discount}, function (r) {
+            });
+    }
+    $(function () {
+        $("input:checkbox").change(function () {
+            $.get("/wx/changecart", {id: this.id}, function (r) {
+                $("#totprice").text(r);
+            });
+        });
+//        $("input:radio").change(function () {
+//           $("#limitp_"+this.id).html('sadasdasd');
+//            $.get("/wx/changeconpousbycart", {id: this.id}, function (r) {
+//            });
+//        });
+        $(".aui-bar-btn-item").on("click", function () {
+            // alert(this.id.split('_'))
+            var fun = this.id.split('_')[0];
+            var id = this.id.split('_')[1];
+            var valueid = 'value_' + id;
+            $.get("/wx/changecartcount", {id: id, fun: fun, type: 'order'}, function (r) {
+                if (r.call == 1) {
+                    $("#" + valueid).val(r.num);
+                    $("#totprice").text(r.totoalprice);
+
+                } else {
+                    alert(r.msg);
+                }
+            });
+        });
+        $("#paychart").on("click", function () {
+            $.get("/wx/verifycart", function (r) {
+                if (r.call == 0) {
+                    alert('订单为空');
+                } else if (r.call == 1) {
+                    alert(r.msg)
+                } else {
+                    location.href = '/wx/fillorder?type=' + r.type + ''
+                }
+            })
+        })
+    });
+    var tab = new auiTab({
+        element: document.getElementById("tab"),
+    }, function (ret) {
+        if (ret.index == 1) {
+            $('#cart').show();
+            $('#ordered').hide();
+        }
+        else if (ret.index == 2) {
+            $('#cart').hide();
+            $('#ordered').show();
+        }
+
+    });
+
+    $('#ordered').hide();
+</script>
+<% include ../nav/footer.ejs %>

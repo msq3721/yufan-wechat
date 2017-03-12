@@ -1,0 +1,11 @@
+<% include header.ejs %>
+
+        <p>Welcome to <%=title %></p>
+
+<!--<%=JSON.stringify(list)%>-->
+<% list.item.forEach(function(item){%>
+<li><a href="<%=item.content.news_item[0].url %>"><%=item.content.news_item[0].title %>|<%=item.content.news_item[0].digest%>-<%=item.content.news_item[0].author %></a>
+<%-item.content.news_item[0].content %>
+</li>
+<% }) %>
+<% include footer.ejs%>

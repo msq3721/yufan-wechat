@@ -1,0 +1,79 @@
+
+<style>
+    .breakfasttitle{
+        margin-left: 0.4rem;
+        margin-top: 0.2rem
+    }
+    .breakfastname{
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    .breakfastabstract{
+        font-size: 0.6rem;
+        color: rgba(192, 192, 192, 0.9);
+        width: 40%;
+    }
+    .breakfastbalance{
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    .breakfastnub{
+        min-width: 5rem;
+        border-radius: 1rem;
+        padding: 0.1rem 0.1rem;
+        min-height: 1.2rem;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+        margin-right: 0rem;
+        font-size: 0.9rem;
+    }
+    .breakfastplus{
+        position: relative;
+        top:2rem;
+        font-size: 1rem;
+        margin-right: 0.6rem;
+        color: rgba(255, 255, 255, 0.9);
+
+    }
+</style>
+<section class="aui-content" >
+    <div class="aui-card-list aui-border-t aui-border-b" style="padding: 0.1rem 0.3rem;">
+<% flist.forEach(function(f){ %>
+<% if(f.type === 1){ %>
+<div style="background: url('/img/<%= f.imgurl %>') no-repeat;background-size: cover; min-height: 9rem;" onclick="window.location.href= '/wx/fooddetail?id=<%=f.id%>';return false">
+    <div class="breakfasttitle">
+    <div class="breakfastname"><%=f.name%></div>
+    <div class="breakfastabstract"><%=f.abstract%></div>
+    <div class="breakfastbalance">￥<%=f.balance%></div>
+    </div>
+    <div class="aui-info aui-margin-t-5 breakfastplus" style="float: right" onClick="event.cancelBubble = true">
+        <% if (f.hasselect ===1){%>
+        <div  class="aui-list-item-right" style="" id="bar_<%= f.id %>">
+            <div class="mynub" id="minus_<%= f.id %>">
+                -
+            </div>
+            <div class="mynub-text" id="value_<%= f.id %>">
+                <% session.user.cart.forEach(function(l){ if(f.id === l.id){%>
+                <%=l.num%>
+                <%  }})%></div>
+            <div class="mynub" id="plus_<%= f.id %>">
+                +
+            </div>
+        </div>
+        <%} else{%>
+        <div  class="aui-list-item-right" style="float: right;" id="bar_<%= f.id %>">
+            <div class="mynub breakfastnub" id="newplus_<%= f.id %>">
+                现在购买
+            </div>
+        </div>
+        <%}%>
+    </div>
+</div>
+<%}%>
+<%})%>
+        <div class="aui-card-list-footer" style="min-height: 0.2rem">
+        </div>
+        </div>
+</section>

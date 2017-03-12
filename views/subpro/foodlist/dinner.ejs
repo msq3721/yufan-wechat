@@ -1,0 +1,51 @@
+<div class="aui-content aui-margin-b-15">
+    <ul class="aui-list aui-media-list">
+        <li class="aui-list-header" style="display: block;background-color: #ffffff;">
+            <hr class="hr-title"/>
+            <div class="hr-more hr-more-dinnder" >午晚餐</div>
+        </li>
+        <% flist.forEach(function(f){ %>
+        <% if(f.type === 2){ %>
+
+        <li class="aui-list-item">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 40%" onclick="window.location.href= '/wx/fooddetail?id=<%=f.id%>';return false">
+                    <img src="/img/<%= f.imgurl %>">
+                </div>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text" onclick="window.location.href= '/wx/fooddetail?id=<%=f.id%>';return false">
+                        <div class="aui-list-item-title"><%= f.name %></div>
+                        <div class="aui-list-item-right">查看</div>
+                    </div>
+                    <div class="aui-list-item-text" onclick="window.location.href= '/wx/fooddetail?id=<%=f.id%>';return false">
+                        <%= f.abstract %>。
+                    </div>
+                    <div class="aui-info aui-margin-t-5" style="padding:0">
+                        <div class="aui-info-item " onclick="window.location.href= '/wx/fooddetail?id=<%=f.id%>';return false">￥<%= f.balance %></div>
+                        <% if (f.hasselect ===1){%>
+                        <div  class="aui-list-item-right" style="float: right;font-size: 1rem;" id="bar_<%= f.id %>">
+                            <div class="mynub" id="minus_<%= f.id %>">
+                                -
+                            </div>
+                            <div class="mynub-text" id="value_<%= f.id %>">
+                                <% session.user.cart.forEach(function(l){ if(f.id === l.id){%>
+                                <%=l.num%>
+                                <%  }})%></div>
+                            <div class="mynub" id="plus_<%= f.id %>">
+                                +
+                            </div>
+                        </div>
+                        <%} else{%>
+                        <div  class="aui-list-item-right" style="float: right;font-size: 1rem;" id="bar_<%= f.id %>">
+                            <div class="mynub" id="newplus_<%= f.id %>">
+                                +
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <% }}) %>
+    </ul>
+</div>

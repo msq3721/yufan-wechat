@@ -1,0 +1,43 @@
+<% include ../nav/header.ejs %>
+<%-data.page %>
+<footer class="aui-bar aui-bar-tab">
+    <div class="aui-bar-tab-item" tapmode style="width: 4rem;">
+        <div class=" aui-text-info">花费积分</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode style="width: 4rem;">
+        <div class=" aui-text-warning"><%=data.balance %></div>
+    </div>
+    <div class="aui-bar-tab-item my-green aui-text-white" tapmode style="width: auto;" id="buy">现在兑换</div>
+</footer>
+<script type="text/javascript" src="/aui/script/api.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-dialog.js" ></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/notie.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    };
+
+    $(function(){
+        var dialog = new auiDialog();
+        $("#buy").on("click",function(){
+            var point = parseInt('<%=session.user.point%>');
+            var cost = parseInt('<%=data.balance%>');
+            if(point<cost){
+                notie.alert(2, '您的积分不足', 2);
+            }
+            else{
+                dialog.alert({
+                    title:"确认兑换",
+                    msg:'兑换此物品将花费您<%=data.balance%>点积分,兑换成功后将在下一次为您送餐时一起送至',
+                    buttons:['取消','确定']
+                },function(ret){
+                    if(ret ===2){
+
+                    }
+                })
+            }
+        })
+    })
+</script>

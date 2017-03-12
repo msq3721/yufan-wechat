@@ -1,0 +1,45 @@
+<% include ../main/navcommom.ejs %>
+<style>
+    img{
+        max-width: 100px;
+        max-height: 100px;
+    }
+</style>
+<h1><%= title %></h1>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>图片</th>
+        <th>菜名</th>
+        <th>类型</th>
+        <th>金额</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th colspan="2">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% result.forEach(function(r){ %>
+    <tr>
+        <td><img src="/img/<%=r.imgurl%>"></td>
+        <td><%=r.name%></td>
+        <td><%if(r.type ===1){%>
+            早餐
+            <%}%>
+            <%if(r.type ===2){%>
+            午晚餐
+            <%}%>
+            <%if(r.type ===3){%>
+            轻食
+            <%}%>
+        </td>
+        <td><%=r.balance%></td>
+        <td><%=r.startdate%></td>
+        <td><%=r.enddate%></td>
+        <td><button type="button" class="btn btn-warning" onclick="window.location.href= '/bk/updatefoodpage?id=<%=r.id%>';return false">修改</button></td>
+        <td><button type="button" class="btn btn-danger" onclick="window.location.href= '/bk/delectfood?id=<%=r.id%>';return false">删除</button></td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+<% include ../main/footer.ejs %>

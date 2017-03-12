@@ -1,0 +1,74 @@
+<footer class="aui-bar aui-bar-tab" id="footer">
+    <div  id="foohome" class="aui-bar-tab-item my-foot-item" tapmode>
+        <i class="aui-iconfont aui-icon-home"></i>
+        <div class="aui-bar-tab-label">首页</div>
+    </div>
+    <div id ="foocart" class="aui-bar-tab-item my-foot-item" tapmode>
+        <div id="cartnum"></div>
+        <i class="aui-iconfont aui-icon-cart"></i>
+        <div class="aui-bar-tab-label">购物车</div>
+    </div>
+    <div id ="fooorder" class="aui-bar-tab-item my-foot-item" tapmode>
+        <i class="aui-iconfont aui-icon-menu"></i>
+        <div class="aui-bar-tab-label">订单</div>
+    </div>
+    <div id="foomy" class="aui-bar-tab-item my-foot-item" tapmode>
+        <i class="aui-iconfont aui-icon-my"></i>
+        <div class="aui-bar-tab-label">我的</div>
+    </div>
+</footer>
+</body>
+
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    };
+    var foottab = new auiTab({
+        element:document.getElementById("footer")
+    },function(ret){
+       if(ret.index == 1){
+           location.href='/wx/shome'
+       }
+       else if(ret.index == 2){
+           location.href = '/wx/cart'
+       }
+        else if(ret.index == 3){
+           location.href = '/wx/order';
+       }
+       else if(ret.index == 4){
+           location.href = '/wx/my';
+       }
+    });
+    $(function(){
+           var pathname = window.location.pathname;
+           if(pathname == '/wx/my') {
+               $('#foomy').addClass('aui-active');
+               $('#foohome').removeClass('aui-active');
+               $('#fooorder').removeClass('aui-active');
+               $('#foocart').removeClass('aui-active');
+           }
+           else if(pathname =='/wx/order') {
+               $('#foomy').removeClass('aui-active');
+               $('#foohome').removeClass('aui-active');
+               $('#fooorder').addClass('aui-active');
+               $('#foocart').removeClass('aui-active');
+           }
+           else if(pathname =='/wx/shome') {
+               $('#foomy').removeClass('aui-active');
+               $('#foohome').addClass('aui-active');
+               $('#fooorder').removeClass('aui-active');
+               $('#foocart').removeClass('aui-active');
+           }
+           else if(pathname =='/wx/cart') {
+               $('#foomy').removeClass('aui-active');
+               $('#foohome').removeClass('aui-active');
+               $('#fooorder').removeClass('aui-active');
+               $('#foocart').addClass('aui-active');
+           }
+        <% if ( session.user.cart.length > 0) { %>
+        $('#cartnum').html('<div class="aui-badge"><%=session.user.cart.length%></div>');
+        <%}%>
+
+    });
+</script>
+</html>

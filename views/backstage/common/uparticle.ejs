@@ -1,0 +1,96 @@
+<% include ../main/navcommom.ejs %>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap-datetimepicker.css">
+<style>
+    .atable tr td:nth-child(1){
+        width: 25%;
+    }
+    .atable tr td:nth-child(2){
+        width: 10%;
+    }
+    .atable tr td:nth-child(3){
+        width: 65%;
+    }
+</style>
+<h1><%= title %></h1>
+
+
+<table class="table atable table-striped ">
+    <thead>
+    <tr>
+        <th>标题</th>
+        <th>作者</th>
+        <th colspan="2">摘要</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% for(let i in r){%>
+    <form id="form_<%=i%>" >
+        <tr>
+            <td><a href="<%=r[i].url %>" name="url" id="url_<%=i%>"><%=r[i].title %> </a></td>
+            <td id="author_<%=i%>"><%=r[i].author %></td>
+            <td colspan="2" id="digest_<%=i%>"><%=r[i].digest %></td>
+        </tr>
+        <tr >
+            <td colspan="2">
+                <input type="text" class="form-control"  placeholder="请输入图片id" name="imgid" id="imgid_<%=i%>">
+            <td style="width: 30%">
+                <input class="form_datetime form-control" type="text" placeholder="请选择发布日期" size="16" autocomplete="off" name="date" id="date_<%=i%>">
+            </td>
+            <td>
+                <button type="submit" class="btn btn-default">提交</button>
+            </td>
+
+        </tr>
+    </form>
+    <% } %>
+    </tbody>
+</table>
+
+<% include ../main/footer.ejs %>
+<script src="/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script src="/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        todayHighlight: true,
+        showMeridian: true,
+        pickerPosition: "bottom-left",
+        language: 'zh-CN',//中文，需要引用zh-CN.js包
+        startView: 2,//月视图
+        minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
+    });
+    $("form[id^='form']").on('submit',function(){
+        let i = this.id.split('_')[1];
+        var formData = new FormData($("#form-demo")[0]);
+        formData.append('url',$("#url_"+i).attr('href'));
+        formData.append('title',$("#url_"+i).text());
+        formData.append('author',$("#author_"+i).text());
+        formData.append('digest',$("#digest_"+i).text());
+        formData.append('imgid',$("#imgid_"+i).val());
+        formData.append('date',$("#date_"+i).val());
+        $.ajax({
+            url: '/bk/uparticle',
+            type: 'POST',
+            data: formData,//<----要传输的数据
+            async: false,
+            cache: false,
+            timeout:100,
+            contentType: false,//<----头信息设置为false
+            processData: false,
+            success: function(data){
+                if(data === 'success'){
+                    alert("文章上传成功");
+                }else if(data=== 'fail'){
+                    alert('文章上传失败');
+                }
+            },
+            error: function(xhr){
+                alert(JSON.stringify(xhr) );
+            }
+        });//end ajax
+    })
+
+
+</script>

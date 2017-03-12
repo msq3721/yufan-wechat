@@ -1,0 +1,80 @@
+<% include ../nav/header.ejs %>
+<style type="text/css">
+    .user-info {
+        background-color: #ffffff;
+        padding: 0.75rem 0;
+    }
+    img.avatar {
+        display: block;
+        margin: 0 auto;
+        width: 20%;
+    }
+    .aui-list .aui-list-header {
+        background-color: #ffffff;
+        line-height: 1.2rem;
+    }
+    .aui-list .aui-list-item {
+        background-color: #FFFFFF;
+    }
+
+</style>
+<section class="aui-content user-info aui-text-center aui-margin-b-15" style="background-color: #4d4d4d">
+    <img src="<%=session.user.headimgurl%>" class="avatar aui-img-round">
+    <h2 class="aui-margin-t-15" style="color: rgba(255, 255, 255, 0.9)"><%=session.user.nickname%> <small></small></h2>
+</section>
+<section class="aui-content aui-grid aui-margin-b-15">
+    <div class="aui-row">
+        <div class="aui-col-xs-6 aui-border-r" onclick="window.location.href= '/wx/couponspage';return false">
+            <big class="aui-text-danger"><%=couponsnum%><small> 张</small></big>
+            <div class="aui-gird-lable aui-font-size-12">优惠</div>
+        </div>
+        <div class="aui-col-xs-6" onclick="window.location.href= '/wx/pointpage';return false">
+            <big class="aui-text-success"><%=session.user.point%><small> 分</small></big>
+            <div class="aui-gird-lable aui-font-size-12">积分</div>
+        </div>
+    </div>
+</section>
+<section class="aui-content">
+    <ul class="aui-list aui-list-in aui-margin-b-15" >
+        <li class="aui-list-item" onclick="window.location.href= '/wx/address';return false">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-location aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">收货地址</div>
+            </div>
+        </li>
+        <li class="aui-list-item" onclick="window.location.href= '/wx/flavor?type=1';return false">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-like aui-text-danger"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">我的口味</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-list-in" onclick="window.location.href= '/wx/pointpage';return false">
+        <li class="aui-list-item">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow" >
+                <div class="aui-list-item-title" >积分商城</div>
+                <div class="aui-list-item-right" >优惠券</div>
+            </div>
+        </li>
+        <li class="aui-list-item" onclick="window.location.href= '/wx/order';return false">
+            <div class="aui-list-item-label-icon">
+                <i class="aui-iconfont aui-icon-cert aui-text-warning"></i>
+            </div>
+            <div class="aui-list-item-inner aui-list-item-arrow">
+                <div class="aui-list-item-title">订单列表</div>
+            </div>
+        </li>
+    </ul>
+</section>
+<script type="text/javascript" src="/aui/script/api.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-slide.js"></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.slim.min.js"></script>
+<% include ../nav/footer.ejs %>

@@ -1,0 +1,75 @@
+<% include ../subpro/nav/header.ejs %>
+<div id="aui-slide3">
+    <div class="aui-slide-wrap" >
+        <div class="aui-slide-node bg-dark">
+            <img src="/aui/image/q1.jpg" />
+        </div>
+        <div class="aui-slide-node bg-dark">
+            <img src="/aui/image/q2.jpg" />
+        </div>
+        <div class="aui-slide-node bg-dark">
+            <img src="/aui/image/q3.jpg" />
+        </div>
+    </div>
+    <div class="aui-slide-page-wrap"><!--分页容器--></div>
+</div>
+
+<div class="aui-bar aui-bar-btn aui-bar-btn-full ">
+    <div class="aui-bar-btn-item ">优惠券</div>
+    <div class="aui-bar-btn-item">活动</div>
+    <div class="aui-bar-btn-item">积分</div>
+    <div class="aui-bar-btn-item">余额</div>
+</div>
+
+
+<div class="aui-tab" id="tab">
+    <div class="aui-tab-item aui-active">早餐</div>
+
+    <div class="aui-tab-item">午晚餐</div>
+
+    <div class="aui-tab-item">轻食</div>
+</div>
+<div id = 'breakfastlist'><% include breakfast.ejs%></div>
+<div id = 'dinnerlist'><% include dinner.ejs%></div>
+<div id = 'lightfoodlist'><% include lightfood.ejs%></div>
+<p>Welcome to <%=title %></p>
+<script type="text/javascript" src="/aui/script/api.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-slide.js"></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript">
+    var slide3 = new auiSlide({
+        container:document.getElementById("aui-slide3"),
+        "height":260,
+        "speed":500,
+        "autoPlay": 3000, //自动播放
+        "loop":true,
+        "pageShow":true,
+        "pageStyle":'line',
+        'dotPosition':'center'
+    });
+    var tab = new auiTab({
+        element:document.getElementById("tab"),
+    },function(ret){
+        if(ret.index == 1){
+            $('#breakfastlist').show();
+            $('#dinnerlist').hide();
+            $('#lightfoodlist').hide();
+        }
+        else if (ret.index == 2){
+            $('#breakfastlist').hide();
+            $('#dinnerlist').show();
+            $('#lightfoodlist').hide();
+        }else if(ret.index == 3){
+            $('#breakfastlist').hide();
+            $('#dinnerlist').hide();
+            $('#lightfoodlist').show();
+        }
+
+    });
+
+        $('#dinnerlist').hide();
+        $('#lightfoodlist').hide();
+
+</script>
+<% include ../subpro/nav/footer.ejs %>

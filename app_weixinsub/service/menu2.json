@@ -1,0 +1,45 @@
+{
+  "button": [
+    {
+      "type": "view",
+      "name": "下馆子",
+      "url": "http://16xx318089.imwork.net/wx/shome/"
+    },
+    {
+      "type": "view",
+      "name": "遇饭故事",
+      "url": "http://16xx318089.imwork.net/wx/articlepage/"
+    },
+    {
+      "name": "遇饭社区",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "我的订单",
+          "url": "http://www.soso.com/"
+        },
+        {
+          "type": "view",
+          "name": "我的优惠券",
+          "url": "http://16xx318089.imwork.net/wx/couponspage"
+        },
+        {
+          "type": "click",
+          "name": "呼叫客服",
+          "key": "V1001_GOOD"
+        },
+        {
+          "type": "click",
+          "name": "加入我们",
+          "key": "V1001_GOOD"
+        }
+//      ,
+//        {
+//          "type": "click",
+//          "name": "我要送餐",
+//          "key": "Y00005"
+//        }
+      ]
+    }
+  ]
+}

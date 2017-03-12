@@ -1,0 +1,168 @@
+<% include ../nav/header.ejs %>
+<style>
+    .sign{
+        color: #fefeff;
+        text-align: center;
+        float: right;
+        position: relative;
+        margin-left: 0.5rem;
+    }
+    .headimg{
+        margin-left: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    .signlevel{
+        margin-left: 0.5rem;
+        margin-righ: 1rem;
+        padding-right: 0.5rem;
+    }
+    .giftimg{
+        max-width: 96%;
+        text-align: center;
+        max-height: 4rem;
+        display: inline-block;
+    }
+    .label {
+        display: block;
+        font-size: 0.7rem;
+        position: relative;
+        margin-top: 0rem;
+        text-align: left;
+        margin-left: 1rem;
+    }
+    .cost{
+        color: #4dc71f;
+        font-weight:600;
+        font-size: 0.8rem;
+    }
+    .name{
+        font-weight:700;
+        font-size: 0.8rem;
+        color: rgba(49, 49, 49, 0.9);
+    }
+    .abstract{
+        color:#757575;
+        font-size: 0.6rem
+    }
+
+</style>
+<div class="aui-card-list">
+    <div class="aui-media-list-item-inner">
+        <div class="aui-list-item-media" style="width: 23%">
+            <img src="<%=session.user.headimgurl%>" class="headimg">
+        </div>
+        <div class="aui-list-item-inner aui-margin-l-10">
+            <div class="aui-list-item-text ">
+                <div class="aui-list-item-title aui-margin-l-10" style="font-weight: 900;font-size: 1rem">
+                    <%= session.user.nickname %>
+                    <span id="point"  style="color:#757575;font-weight: 400;font-size: 0.5rem;margin-left: 0.5rem">积分：<%=session.user.point%></span>
+                </div>
+            </div>
+            <div class="aui-list-item-text aui-margin-l-10"  style="color:#757575;font-size: 0.6rem">
+
+                <div class="aui-list-item-right" >已签：<span id="len"><%=len%></span>天 连续：<span id="series"><%=series%></span>天</div>
+            </div>
+            <div class="aui-info " >
+                <div class="aui-btn my-green-border signlevel">签到得<%if(series>3){%>3<%}else{%>2<%}%>分</div>
+                <p><div class="aui-btn my-green sign" id="sign">签到</div></p>
+
+                <p><div class="aui-btn my-green sign" id="nosign">今日已签到</div></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<section class="aui-grid aui-margin-b-15">
+    <div class="aui-row">
+        <div class="aui-col-xs-6" id="1">
+            <img src="/aui/image/优惠券.png" class="giftimg"/>
+            <div class="label cost">积分:100</div>
+            <div class="label name">2元优惠券</div>
+            <div class="label abstract">领取后5日内使用</div>
+        </div>
+        <div class="aui-col-xs-6" id="2">
+            <img src="/aui/image/优惠券.png" class="giftimg"/>
+            <div class="label cost">积分:150</div>
+            <div class="label name">5元优惠券</div>
+            <div class="label abstract">领取后5日内使用</div>
+        </div>
+        <div class="aui-col-xs-6" id="3">
+            <img src="/aui/image/优惠券.png" class="giftimg"/>
+            <div class="label cost">积分:150</div>
+            <div class="label name">8元优惠券</div>
+            <div class="label abstract">领取后5日内使用</div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="/aui/script/api.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-dialog.js" ></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/notie.js"></script>
+<script>
+    apiready = function () {
+        api.parseTapmode();
+    };
+    $(function(){
+        var type ='<%=type%>';
+        if(type ==='1'){
+            $("#nosign").hide();
+        }
+        else {
+            $("#sign").hide();
+        }
+    });
+    $("#sign").on('click',function(){
+        $.get('/wx/sign',{series:'<%=series%>'},function(r){
+            $("#nosign").show();
+            $("#sign").hide();
+            var len = parseInt($("#len").text());
+            var series = parseInt($("#series").text());
+            var point = parseInt('<%=session.user.point%>');
+            len++;
+            series++;
+            if(len>3){
+                point+=3;
+            }else{
+                point+=2;
+            }
+            $("#len").text(len);
+            $("#series").text(series);
+            $("#point").text(point);
+            notie.alert(1, r, 1.5);
+        })
+
+    });
+    var dialog = new auiDialog();
+    $(".aui-col-xs-6").on("click",function(){
+        var point = parseInt('<%=session.user.point%>');
+        var id = this.id;
+        var cost;
+        if(id ==='1'){
+            cost =50;
+        }
+        else if(id === '2'){
+            cost =100;
+        }
+        else if(id ==='3'){
+            cost =150;
+        }
+        if(point<cost){
+            notie.alert(2, '您的积分不足', 2);
+        }
+        else{
+            dialog.alert({
+                title:"确认兑换",
+                msg:'兑换此优惠券将花费您'+cost+'点积分',
+                buttons:['取消','确定']
+            },function(ret){
+                if(ret.buttonIndex ===2){
+                    $.get('/wx/bygift',{cost:cost,id:id},function(r){
+                        notie.alert(1, r, 2);
+                    })
+                }
+            })
+        }
+    })
+</script>

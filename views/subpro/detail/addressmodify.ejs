@@ -1,0 +1,85 @@
+<% include ../nav/header.ejs %>
+<form action="/wx/modifyaddress?id=<%=p.id%>&type=<%=type%>" method="post">
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        联系人
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" value="<%=p.name %>" name="name">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        称呼
+                    </div>
+                    <div class="aui-list-item-input">
+                        <% if(p.sex ===1){%>
+                        <label><input class="aui-radio" type="radio" name="sex" value="1" checked> 先生</label>
+                        <label><input class="aui-radio" type="radio" name="sex" value="0"  > 女士</label>
+                        <%}else{%>
+                        <label><input class="aui-radio" type="radio" name="sex" value="1" > 先生</label>
+                        <label><input class="aui-radio" type="radio" name="sex" value="0" checked > 女士</label>
+                        <%}%>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        手机号码
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="number" placeholder="配送员联系您的电话" name="mobile" value="<%=p.mobile%>">
+                    </div>
+                </div>
+            </li>
+            <!--<li class="aui-list-item">-->
+                <!--<div class="aui-list-item-inner">-->
+                    <!--<div class="aui-list-item-label">-->
+                        <!--配送区域-->
+                    <!--</div>-->
+                    <!--<div class="aui-list-item-input">-->
+
+                            <!--<option value="常州大学">常州大学</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        门牌号
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="text" placeholder="详细地址，例:9栋454" name="site" value="<%=p.site%>">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        是否默认
+                    </div>
+                    <div class="aui-list-item-input">
+                        <input type="checkbox" class="aui-switch my-green" name="isdefault" checked>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                    <input type="submit" class="aui-btn  my-green aui-btn-info aui-margin-r-5" value="保存">
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+<script type="text/javascript" src="/aui/script/api.js" ></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js" ></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+
+<% include ../nav/footer.ejs %>

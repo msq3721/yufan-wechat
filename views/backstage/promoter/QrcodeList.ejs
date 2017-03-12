@@ -1,0 +1,24 @@
+<% include ../main/navqrcode.ejs%>
+<table class="table">
+    <caption>推广人列表</caption>
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>ID</th>
+        <th>推广数量</th>
+        <th>二维码地址</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% rr.forEach(function(r){%>
+    <tr>
+        <td><%=r.name%></td>
+        <td><%=r.sceneId%></td>
+        <td><%=r.followNum%></td>
+        <td><a href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=<%=r.ticket%>">点击查看</a></td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+
+<% include ../main/footer.ejs %>

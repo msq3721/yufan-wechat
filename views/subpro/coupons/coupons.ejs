@@ -1,0 +1,139 @@
+<% include ../nav/header.ejs %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/component.css">
+<style>
+    .title{
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .txt{
+        padding: 0rem 1.5rem;
+        -webkit-border-radius: 2rem;
+        -moz-border-radius: 2rem;
+        border-radius: 2rem;
+        width: 90%;
+        position: relative;
+        left: 5%;
+        border-right: #ffffff 0px solid;
+        border-top: #ffffff 0px solid;
+        border-left: #ffffff 0px solid;
+        border-bottom: #c0c0c0 1px solid;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+
+    }
+    .btn{
+        margin-top: 0.5rem;
+    }
+    .button {
+        height:2rem;
+        width: 7rem;
+        display: inline-block;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -ie-border-radius: 6px;
+        border-radius: 6px;
+        padding: 0.2rem 1rem;
+        text-shadow: rgba(0,0,0,.5) 0px -1px 0px;
+        font-size: 18px;
+        font-weight: 700;
+        -webkit-transition-property: background-color;
+        -webkit-transition-duration: .15s;
+        -webkit-transition-timing-function: ease-in-out;
+        cursor: pointer;
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+    .button:active {
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+    .button span {
+        vertical-align: middle;
+    }
+    .lightbg-green {
+        background-color: #78896d;
+        color: #e2f1d8;
+        -webkit-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+        -moz-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+        -ie-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+        box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 4px 0px 0px #63715a, 0px 5px 0px 0px #535e4b, 0px 8px 0px 0px rgba(0,0,0,.15);
+    }
+    .lightbg-green:hover {
+        background-color: #8b9f7f;
+    }
+    .lightbg-green:active {
+        background-color: #68775f;
+        -webkit-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+        -moz-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+        -ie-box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+        box-shadow: 0px 0px 0px 1px #63715a inset, 0px 0px 0px 2px #87977a inset, 0px 1px 0px 0px #63715a, 0px 3px 0px 0px rgba(0,0,0,.15);
+    }
+    .lightbg-green .arrow {
+        border-color: transparent transparent transparent #87977a;
+    }
+</style>
+<div class="title">
+    <div class="aui-list-item-input txt">
+        <input type="text" placeholder="请在此输入优惠券码" id="coupons">
+    </div>
+    <button id="sub" class="btn button lightbg-green ">提交</button>
+</div>
+
+<div class="aui-content aui-margin-b-15">
+    <ul class="aui-list aui-media-list">
+        <% p.forEach(function(pp){%>
+        <li class="aui-list-item">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media">
+                    <%if(pp.discount === 8){%>
+                    <img src="/aui/image/优惠券.png">
+                    <%}else if(pp.discount === 5){%>
+                    <img src="/aui/image/优惠券.png">
+                    <%}else if(pp.limitprice === 2){%>
+                    <img src="/aui/image/优惠券.svg">
+                    <%}else{%>
+                    <img src="/aui/image/优惠券.png">
+                    <%}%>
+                </div>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title"><%=pp.discount%>元抵用券</div>
+                    </div>
+                    <div class="aui-list-item-text">
+                        使用条件：
+                        <% if (pp.limitprice === 0){%>
+                        无门槛
+                        <%}else{%>
+                        满<%=pp.limitprice%>元使用
+                        <%}%>
+                    </div>
+                    <div class="aui-list-item-text">
+                        使用日期:<%=pp.startdate%>~<%=pp.enddate%>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <%})%>
+    </ul>
+</div>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/notie.js"></script>
+<script>
+    $(function(){
+        $("#sub").on('click',function(){
+            $.get('/wx/couponsins',{coupons:$("#coupons").val()},function(r){
+                if(r === '0'){
+                    notie.alert(3, '添加错误', 1.5);
+                }else if(r === '1'){
+                    notie.alert(1, '添加购物券成功', 1.5);
+                    location.reload();
+                }else if(r === '2'){
+                    notie.alert(1, '该购物券已经被添加', 1.5);
+                }
+                else if(r === '3'){
+                    notie.alert(2, '该购物券不存在', 1.5);
+                }
+            })
+        })
+    })
+</script>

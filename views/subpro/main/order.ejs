@@ -1,0 +1,84 @@
+<% include ../nav/header.ejs %>
+<style type="text/css">
+    .aui-bar-btn-item {
+        border-color: #5DAC81;
+    }
+
+    .statustext {
+        max-width: 30%;
+        font-size: 0.8rem;
+    }
+</style>
+<section class="aui-content" style="margin-bottom: 4rem">
+    <div class="aui-tab" id="tab">
+        <div class="aui-tab-item aui-active">全部</div>
+        <div class="aui-tab-item">
+            <div></div>
+            等待配送
+        </div>
+        <div class="aui-tab-item">正在配送</div>
+        <div class="aui-tab-item">已完成</div>
+    </div>
+    <div id="allorder">
+        <% include ../order/allorder.ejs %>
+    </div>
+    <div id="waitorder">
+        <% include ../order/waitorder.ejs %>
+    </div>
+
+    <div id="ingorder">
+        <% include ../order/ingorder.ejs %>
+    </div>
+
+    <div id="completeorder">
+        <% include ../order/completeorder.ejs %>
+    </div>
+
+</section>
+<script type="text/javascript" src="/aui/script/api.js"></script>
+<script type="text/javascript" src="/aui/script/aui-tab.js"></script>
+<script type="text/javascript" src="/aui/script/aui-slide.js"></script>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+
+<% include ../nav/footer.ejs %>
+<script type="text/javascript">
+    apiready = function () {
+        api.parseTapmode();
+    }
+    var tab = new auiTab({
+        element: document.getElementById("tab"),
+    }, function (ret) {
+
+        if (ret.index === 1) {
+
+            $("#allorder").show();
+            $("#waitorder").hide();
+            $("#ingorder").hide();
+            $("#completeorder").hide();
+        }
+        else if (ret.index === 2) {
+            $("#allorder").hide();
+            $("#waitorder").show();
+            $("#ingorder").hide();
+            $("#completeorder").hide();
+        }
+        else if (ret.index === 3) {
+            $("#allorder").hide();
+            $("#waitorder").hide();
+            $("#ingorder").show();
+            $("#completeorder").hide();
+        }
+        else if (ret.index === 4) {
+            $("#allorder").hide();
+            $("#waitorder").hide();
+            $("#ingorder").hide();
+            $("#completeorder").show();
+        }
+    });
+    $(function () {
+        $("#waitorder").hide();
+        $("#ingorder").hide();
+        $("#completeorder").hide();
+    })
+</script>
+</html>

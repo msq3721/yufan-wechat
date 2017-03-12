@@ -1,0 +1,75 @@
+
+
+<% if(data.length<1){%>
+<h1>订单为空</h1>
+<%}else{ var  i =0%>
+<%  data.forEach(function(d){ %>
+<% if(d[0].status === 4){ i++%>
+<section class="aui-content">
+    <div class="aui-card-list aui-border-t aui-border-b">
+        <div class="aui-card-list-header aui-card-list-user">
+            <div class="aui-card-list-user-name">
+                <div class="aui-font-size-16">地址:<%=d[0].area%><%=d[0].site%></div>
+                <% if(d[0].deliverytime === '现在配送'){%>
+                订购方式
+                <%}else{%>
+                预定时间:
+                <%}%>
+            </div>
+            <div class="aui-card-list-user-name">
+                <div class="aui-font-size-16"> <%=d[0].name%> <%if(d[0].sex ==1){%>先生<%}else{%>女士<%}%> <%=d[0].mobile%>
+
+                </div>
+                <%=d[0].deliverytime%>
+            </div>
+        </div>
+
+        <div class="aui-card-list-content aui-border-t" style="margin-left: 1rem;">
+            <ul class="aui-list aui-list-noborder">
+                <% d.forEach(function(dd){%>
+                <div class="aui-card-list-user-avatar">
+                    <img src="../img/<%=dd.imgurl%>">
+                </div>
+                <div class="aui-list-item aui-padded-l-0">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title aui-font-size-14 goods-title"><%=dd.productname%>×<%=dd.foodnum%></div>
+                        <div class="aui-list-item-right goods-price">￥<%=dd.balance%></div>
+                    </div>
+                </div>
+                <%})%>
+            </ul>
+        </div>
+        <div class="aui-card-list-footer">
+            <span style="float: left">下单时间：<%=d[0].ordertime%></span>
+            <div class="aui-list-item-right ">总价￥<%=d[0].totoalprice%>元</div>
+        </div>
+        <div class="aui-card-list-footer">
+            <% if(d[0].status ===1) {%>
+            <div class="aui-btn my-green-border  aui-btn-outlined statustext">下单成功</div>
+            <% if(d[0].deliverytime === '现在配送'){%>
+            <span style="float: left">等待确认 </span>
+            <%}else{%>
+            <span style="float: left">我们将尽力满足您的预定时间 </span>
+            <%}%>
+            <%}else if(d[0].status ===2){%>
+            <div class="aui-btn my-green-border  aui-btn-outlined statustext">制作中</div>
+            <span style="float: left">您的订单正在制作 </span>
+            <%}else if(d[0].status ===3){%>
+            <div class="aui-btn my-green-border  aui-btn-outlined statustext">配送中</div>
+            <span style="float: left">您的订单正在配送中，请耐心等待 </span>
+            <%}else if(d[0].status ===4){%>
+            <div class="aui-btn my-green-border  aui-btn-outlined statustext">订单已完成</div>
+            <span style="float: left">感谢您的光顾</span>
+            <%}%>
+        </div>
+        <div class="aui-card-list-footer">
+            <span style="float: left">下单时间：<%=d[0].tradeno%></span>
+        </div>
+    </div>
+    <%} %>
+    <%})%>
+    <%if(i === 0){%>
+    暂无等待配送订单
+    <%}%>
+    <%}%>
+</section>

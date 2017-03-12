@@ -1,0 +1,342 @@
+<% include ../nav/header.ejs %>
+<link rel="stylesheet" href="/stylesheets/datedropper.min.css">
+<link rel="stylesheet" href="/stylesheets/timedropper.min.css">
+<link rel="stylesheet" href="/stylesheets/my-style.css">
+<div class="aui-content my-bottom">
+    <ul class="aui-list aui-media-list">
+        <li class="aui-list-item aui-list-item-arrow">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner" onclick="window.location.href= '/wx/addressselectpage';return false">
+                    <% if(session.user.address && hasaddress === true){ %>
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title">
+                            地址:<%= session.user.address.area %><%= session.user.address.site %></div>
+                    </div>
+                    <div class="aui-list-item-text aui-ellipsis-2">
+                        <%= session.user.address.name %>
+                        <% if(session.user.address.sex == 1){ %>
+                        先生
+                        <% }else{ %>
+                        女士
+                        <% } %>
+                        <%= session.user.address.mobile %>
+                    </div>
+                    <% }else if(!session.user.address && hasaddress === true){ %>
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title">请选择地址</div>
+                    </div>
+                    <div class="aui-list-item-text aui-ellipsis-2">
+                        <%= session.user.address.name %>
+                    </div>
+                    <% }else if(hasaddress === false){ %>
+                    <div class="aui-list-item-text"
+                         onclick="window.location.href= '/wx/addressselectpage';return false">
+                        <div class="aui-list-item-title">请选择地址</div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-arrow">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title">送货时间
+                            <% if (type === '1' || timetype === 2){ %>
+                            <label><input class="aui-radio" type="radio" name="time" value="1" disabled> 现在配送</label>
+                            <label><input class="aui-radio" type="radio" name="time" value="2" checked> 预定</label></div>
+                        <% }else{ %>
+                        <label><input class="aui-radio" type="radio" name="time" value="1" checked> 现在配送</label>
+                        <label><input class="aui-radio" type="radio" name="time" value="2"> 预定</label></div>
+                    <% } %>
+                </div>
+                <div id="reserve">
+                    <div class="aui-list-item-text aui-ellipsis-2">
+                        <span style="width: 50%;"> 请选择日期:</span><input type="text" class="input" id="pickdate"
+                                                                       data-lang="zh" data-theme="my-style"
+                                                                       data-format="Y-m-d"/>
+                    </div>
+                    <div class="aui-list-item-text aui-ellipsis-2" style="height: 1rem">
+                        <span style="width: 50%;"> 请选择时间:</span><input type="text" class="input" id="picktime"/>
+                    </div>
+                    <div class="aui-list-item-text aui-ellipsis-2" id="timeerr" style="color: #ff2d12">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-arrow" onclick="window.location.href= '/wx/flavor?type=2';return false">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title">口味备注</div>
+                    </div>
+                    <% if(flavor.length > 0){ %>
+                    <div class="aui-list-item-text aui-ellipsis-2" style="justify-content:flex-start">
+                        <% flavor.forEach(function(r){ %>
+
+                        <div class="my-green-border" style="margin-right: 0.5rem;padding: 0.1rem 0.1rem"><%= r %></div>
+                        <% }) %>
+                    </div>
+                    <% }else{ %>
+                    <div class="aui-list-item-text aui-ellipsis-2" style="justify-content:flex-start">
+                        尚未设置口味偏好
+                    </div>
+                    <% } %>
+                    <% if ((flavorremark != "" && flavorremark != undefined && flavorremark != null)){ %>
+                    <div class="aui-list-item-text aui-ellipsis-2">
+                        <span>备注：<%= flavorremark %></span>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-header">
+            订单列表
+        </li>
+        <% if ( session.user.cart.length > 0) { %>
+        <% session.user.cart.forEach(function(l){ %>
+        <% if(l.checked == 1 && l.num > 0){ %>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-title"><%= l.name %></div>
+                <div class="aui-list-item-right">￥<%= l.balance %>*<%= l.num %></div>
+            </div>
+        </li>
+        <% } } ) }else{ %>
+        <li class="aui-list-footerr">
+            订单列表为空
+        </li>
+        <% } %>
+    </ul>
+    <% if(coupons.id != 'nocoupons'){ %>
+    <ul class="aui-list aui-select-list">
+        <li class="aui-list-header">优惠券</li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-title">
+                    <% if(coupons.limitprice > 0){ %>
+                    满
+                    <div id="limitp_<%= coupons.id %>"><%= coupons.discount %></div>
+                    元减
+                    <% } %>
+                    <%= coupons.discount %>元优惠券
+                </div>
+            </div>
+        </li>
+    </ul>
+    <% } %>
+    <ul class="aui-list aui-select-list">
+        <li class="aui-list-header">支付方式</li>
+        <li class="aui-list-item">
+            <div class="aui-list-item-inner">
+                <label><input class="aui-radio" type="radio" name="radio" checked> 微信支付</label>
+            </div>
+        </li>
+    </ul>
+
+</div>
+<footer class="aui-bar aui-bar-tab">
+    <div class="aui-bar-tab-item" tapmode style="width: 40%;">
+        <div class=" aui-text-info">订单总金额价格</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode style="width: 15%;">
+        <div class=" aui-text-warning"><%= totoalprice %>元</div>
+    </div>
+    <!--<div class="aui-bar-tab-item my-green aui-text-white" tapmode style="width: auto;"-->
+    <!--onclick="window.location.href= '/wx/buy?type=<%= type %>&flavor=<%= flavor %>&flavorremark=<%= flavorremark %>';return false">-->
+    <!--加入购物车-->
+    <!--</div>-->
+    <div class="aui-bar-tab-item my-green aui-text-white" tapmode style="width: auto;" id="fillcart">
+        现在支付
+    </div>
+</footer>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/timedropper.min.js"></script>
+<script type="text/javascript" src="/javascript/datedropper.min.js"></script>
+<script type="text/javascript" src="/javascript/moment.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+    $("#pickdate").dateDropper({});
+    $("#picktime").timeDropper({
+        meridians: false,
+        format: 'HH:mm',
+        primaryColor: '#4dc71f',
+        borderColor: '#4dc71f'
+    });
+    $(function () {
+        if ($("input[name='time']:checked").val() === '2') {
+            $("#reserve").show();
+        } else {
+            $("#reserve").hide();
+        }
+        $("input[name='time']").on('click', function (r) {
+            if ($(this).val() === '2') {
+                $("#reserve").show();
+            }
+            else {
+                $("#reserve").hide();
+            }
+        });
+        $("#fillcart").on('click', function () {
+            var deliverytime = '现在配送';
+            var errmsg = '';
+            var type = '<%= type %>';
+            if ($("input[name='time']:checked").val() === '2') {
+                var now = moment();
+                if ($("#pickdate").val().replace(/(^s*)|(s*$)/g, "").length == 0) {
+                    errmsg += '日期不能为空';
+                }
+                else {
+                    var date = moment($("#pickdate").val());
+                    var nowdate = moment([now.year(), now.month(), now.date()]);
+                    if (date.diff(nowdate, 'days') > 2) {
+                        if (type === '1') {
+                            errmsg += '日期选择错误，早饭只能预定明天后天的饭';
+                        }
+                        else {
+                            errmsg += '日期选择错误，只能预定今天至后天的饭';
+                        }
+                    }
+                    else if (date.diff(nowdate, 'days') < 0) {
+                        errmsg += '日期选择错误，不能小于当前日期';
+                    }
+                    else if (date.diff(nowdate, 'days') === 0 && type === '1') {
+                        errmsg += '日期选择错误，早饭只能预定明天后天的饭';
+                    }
+                }
+                var time = $("#picktime").val();
+                if (time.replace(/(^s*)|(s*$)/g, "").length == 0) {
+                    errmsg += '日期不能为空';
+                } else {
+
+                    var hour = parseInt(time.split(':')[0], 10);
+                    var minute = parseInt(time.split(':')[1], 10);
+                    var time = moment();
+                    time.hours(hour);
+                    time.minutes(minute);
+
+                    if (type === '1') {
+                        if (now.hour() >= 22 && date.diff(nowdate, 'days') === 0) {
+                            errmsg += '今日早餐预定时间已过，请在22:00之前预定';
+                        }
+                        else if (hour < 6 || hour > 8) {
+                            errmsg += '时间选择错误，早餐配送时间为6:00~8:00';
+                        }
+                    }
+                    if (type === '2') {
+                        if (hour < 10 || hour > 19) {
+                            errmsg += '时间选择错误，午晚餐配送时间为10:00~19:00';
+                        }
+                        else if (time.diff(now, 'minutes') < 0 && date.diff(nowdate, 'days') === 0) {
+                            errmsg += '时间选择错误，预定请选择大于当前时间半小时的时间';
+                        }
+                        else if (time.diff(now, 'minutes') < 30 && date.diff(nowdate, 'days') === 0) {
+                            errmsg += '与当前时间超过半小时，请选择立即配送';
+                        }
+                    }
+                    if (type === '3') {
+                        if (hour < 6 || hour >= 19) {
+                            errmsg += '时间选择错误，轻食配送时间为6:00~19:00';
+                        }
+                        else if (time.diff(now, 'minutes') < 0 && date.diff(nowdate, 'days') === 0) {
+                            errmsg += '时间选择错误，预定请选择大于当前时间半小时的时间';
+                        }
+                        else if (time.diff(now, 'minutes') < 30 && date.diff(nowdate, 'days') === 0) {
+                            errmsg += '与当前时间超过半小时，请选择立即配送';
+                        }
+                    }
+                }
+                if (errmsg.length == 0) {
+                    date.hours(hour);
+                    date.minutes(minute);
+                    deliverytime = date.format('YYYY/MM/DD HH:mm');
+                    buyajax(deliverytime);
+                }
+                else {
+                    $("#timeerr").html(errmsg);
+                }
+            } else {
+                <% if(session.user.address && hasaddress === true){ %>
+                buyajax(deliverytime)
+                <% }else{ %>
+                alert('未选择地址');
+                <% } %>
+            }
+
+        })
+
+    });
+    function buyajax(deliverytime) {
+        WeixinJSBridge.invoke('getBrandWCPayRequest', pay, function (res) {
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                $.get("/wx/buy", {
+                            type: '<%= type %>',
+                            flavor: '<%= flavor %>',
+                            flavorremark: '<%= flavorremark %>',
+                            deliverytime: deliverytime,
+                            totoalprice: '<%= totoalprice %>',
+                            couponsid: '<%= coupons.id %>',
+                            tradeno: '<%= tradeNo %>',
+                            discount: '<%= coupons.discount %>'
+                        },
+                        function (r) {
+                            if (r.call === 'success') {
+                                location.href = "/wx/order";
+                            }
+                            else if (r.call === 'err') {
+                                alert('订单提交失败，请稍后再试');
+                            }
+                        })
+
+            } else {
+                alert("支付失败，请重试");
+            }
+        });
+        <!--$.get("/wx/buy", {-->
+        <!--type: '<%= type %>',-->
+        <!--flavor: '<%= flavor %>',-->
+        <!--flavorremark: '<%= flavorremark %>',-->
+        <!--deliverytime: deliverytime-->
+        <!--},-->
+        <!--function(r){-->
+        <!--if(r.call ==='success'){-->
+        <!--location.href="/wx/order";-->
+        <!--}-->
+        <!--else if(r.call === 'err'){-->
+        <!--alert('订单提交失败，请稍后再试');-->
+        <!--}-->
+        <!--})-->
+    }
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '<%= config.appId %>', // 必填，公众号的唯一标识
+        timestamp: '<%= config.timestamp %>', // 必填，生成签名的时间戳
+        nonceStr: '<%= config.nonceStr %>', // 必填，生成签名的随机串
+        signature: '<%= config.signature %>',// 必填，签名，见附录1
+        jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+    var pay = {
+        "appId": '<%= appId %>',
+        "timeStamp": '<%= timeStamp %>',
+        "nonceStr": '<%= nonceStr %>',
+        "package": '<%= package %>',
+        "signType": '<%= signType %>',
+        "paySign": '<%= paySign %>'
+    }
+    wx.chooseWXPay({
+        timestamp: pay.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+        nonceStr: pay.nonceStr, // 支付签名随机串，不长于 32 位
+        package: pay.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+        signType: pay.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+        paySign: pay.paySign, // 支付签名
+        success: function (res) {
+            // 支付成功后的回调函数
+            console.log('OK');
+            console.log(res);
+        }
+    });
+</script>
+
+

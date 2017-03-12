@@ -1,0 +1,192 @@
+<% include ../nav/header.ejs %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/buttons%20(1).css">
+<style>
+.sign{
+color: #fefeff;
+text-align: center;
+position: absolute;
+margin-left: 0.5rem;
+    top: 0.2rem;
+    left:50%;
+    width:5rem;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+.headimg{
+margin-left: 0.5rem;
+margin-top: 0.5rem;
+}
+.signlevel{
+    margin-left: 0.5rem;
+    top: 1.4rem;
+    left:25%;
+    width:3.5rem;
+    vertical-align: middle;
+    font-size: 0.6rem;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.9);
+}
+</style>
+<!--<div class="aui-card-list">-->
+<!--<div class="aui-media-list-item-inner">-->
+<!--<div class="aui-list-item-media" style="width: 23%">-->
+<!--<img src="<%= session.user.headimgurl %>" class="headimg">-->
+<!--</div>-->
+<!--<div class="aui-list-item-inner aui-margin-l-10">-->
+<!--<div class="aui-list-item-text ">-->
+<!--<div class="aui-list-item-title aui-margin-l-10" style="font-weight: 900;font-size: 1rem">-->
+<!--<%= session.user.nickname %>-->
+<!--<span id="point"  style="color:#757575;font-weight: 400;font-size: 0.5rem;margin-left: 0.5rem">积分：<%= session.user.point %></span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="aui-list-item-text aui-margin-l-10"  style="color:#757575;font-size: 0.6rem">-->
+
+<!--<div class="aui-list-item-right" >已签：<span id="len"><%= len %></span>天 连续：<span id="series"><%= series %></span>天</div>-->
+<!--</div>-->
+<!--<div class="aui-info " >-->
+<!--<div class="aui-btn my-green-border signlevel">签到得<% if(series > 3){ %>3<% }else{ %>2<% } %>分</div>-->
+<!--<p><div class="aui-btn my-green sign" id="sign">签到</div></p>-->
+
+<!--<p><div class="aui-btn my-green sign" id="nosign">今日已签到</div></p>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<style>
+    .signbox {
+        background-color: #5DAC81;
+        /*background: url("/aui/image/articletitle.png");*/
+        height: 3.3rem;
+    }
+
+    .signdate {
+        height: 4rem;
+        /*border-radius: 50%;*/
+        background: url('/aui/image/日历2.png') no-repeat;
+        background-size: 4rem;
+        width: 4rem;
+        position: relative;
+        top: -3rem;
+        right: -0.8rem;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .signdays {
+        top: 1rem;
+        position: relative;
+        font-size: 2.2rem;
+    }
+</style>
+<div style="height: 4.3rem;background-color: #FFFFFF">
+
+    <div class="signbox">
+        <div class="signlevel"><ul>
+                <li><%= session.user.nickname %></li>
+                <li>积分：<%= session.user.point %></li>
+            </ul></div>
+        <p><div class="button green sign" id="sign">未签到</div></p>
+
+        <p><div class="button green sign" id="nosign">已签到</div></p>
+    </div>
+    <div class="signdate">
+        <div class="signdays">3</div>
+    </div>
+</div>
+<% if (today.length < 1){ %>
+<% }else{ %>
+<% today.forEach(function(t){ %>
+<section class="aui-content">
+
+    <div class="aui-card-list aui-border-t aui-border-b">
+        <div class="aui-info aui-padded-l-15 aui-padded-r-15">
+            <div class="aui-info-item aui-font-size-12">
+                <span class="aui-margin-l-5">今日文章</span>
+            </div>
+            <div class="aui-info-item">
+                <i class="aui-iconfont aui-icon-more"></i>
+            </div>
+        </div>
+        <div class="aui-card-list-content">
+            <img src="../img/<%= t.imgid %>"/>
+        </div>
+        <div class="aui-card-list-header aui-padded-t-5 aui-padded-b-5">
+            <a href="<%= t.url %>"><%= t.title %></a>
+        </div>
+        <div class="aui-card-list-content-padded aui-padded-t-0 aui-padded-b-0" style="color:#7b7b7b;">
+            <%= t.digest %>
+        </div>
+        <div class="aui-card-list-footer aui-font-size-12" style="color:#999;">
+            <div>
+                <span><%= t.author %></span> - <span><%= t.date %></span>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+    <% } %>
+
+    <div class="aui-content">
+        <ul class="aui-list aui-media-list">
+            <% history.forEach(function(t){ %>
+            <li class="aui-list-item">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-18"><a href="<%= t.url %>"><%= t.title %></a>
+                            </div>
+                        </div>
+                        <div class="aui-list-item-text">
+                            <p class="aui-ellipsis-2"><%= t.digest %></p>
+                        </div>
+                        <div class="aui-info aui-padded-b-0">
+                            <div class="aui-info-item aui-font-size-12">
+                                <span class="aui-margin-l-5"><%= t.author %></span>
+                            </div>
+                            <div class="aui-info-item aui-font-size-12"><%= t.date %></div>
+                        </div>
+                    </div>
+                    <div class="aui-list-item-media">
+                        <img src="/img/<%= t.imgid %>">
+                    </div>
+                </div>
+            </li>
+            <% }) %>
+        </ul>
+    </div>
+</section>
+<script type="text/javascript" src="/javascript/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/javascript/notie.js"></script>
+<script>
+    $(function () {
+        var type = '<%= type %>';
+        if (type === '1') {
+            $("#nosign").hide();
+        }
+        else {
+            $("#sign").hide();
+        }
+    });
+    $("#sign").on('click', function () {
+        $.get('/wx/sign', {series: '<%= series %>'}, function (r) {
+            $("#nosign").show();
+            $("#sign").hide();
+            var len = parseInt($("#len").text());
+            var series = parseInt($("#series").text());
+            var point = parseInt('<%= session.user.point %>');
+            len++;
+            series++;
+            if (len > 3) {
+                point += 3;
+            } else {
+                point += 2;
+            }
+            $("#len").text(len);
+            $("#series").text(series);
+            $("#point").text(point);
+            notie.alert(1, r, 1.5);
+        })
+
+    })
+</script>
+

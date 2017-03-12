@@ -1,0 +1,128 @@
+.foodlistimage{
+    width: 40%;
+}
+.mynub{
+    background-color:#4dc71f;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 1rem;
+    height:1rem;
+    line-height: 1rem;;
+    text-align: center;
+}
+.mynub-text{
+    width: 1rem;
+    height:1rem;
+    line-height: 1rem;;
+    text-align: center;
+}
+.shome-nav{
+    width: 100%;
+}
+.shome-nav td{
+    table-layout: fixed;
+    width: 33.3%;
+
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.shome-nav td img{
+    max-width: 50%;
+    max-height: 50%;
+    vertical-align: middle;
+    text-align: center;
+    height: 2rem;
+    display: inline-block;
+}
+.home-ul-nav{
+    width:100%;
+    background:#00A2CA;
+    text-align:center;
+    margin: 0 auto;
+}
+.home-ul-nav li{
+    float: left;
+    width: 25%;
+    text-align:center;
+    background-color: #ffffff;
+}
+.home-ul-nav img{
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    height: 2rem;
+    display: inline-block;
+}
+.my-btnbar-item{
+    border-color:#ffffff;
+    background-color:#4dc71f;
+    color: #ffffff;
+}
+.aui-bar-tab .aui-active{
+    color:#4dc71f;
+}
+.aui-bar-btn-item{
+    border-color:#4dc71f;
+}
+.my-btnbar-item{
+    border-color:#ffffff;
+    background-color:#4dc71f;
+    color: #ffffff;
+}
+.aui-tab-item.aui-active {
+    color: #4dc71f;
+    border-bottom: 2px solid #4dc71f;
+}
+.aui-radio:checked,
+.aui-radio.aui-checked,
+.aui-checkbox:checked,
+.aui-checkbox.aui-checked {
+    background-color: #4dc71f;
+    border: solid 1px #4dc71f;
+}
+.aui-switch:checked {
+    border-color: #4dc71f;
+    background-color: #4dc71f;
+}
+.hr-more{
+    height: 1rem;
+    width: 6rem;
+    position: relative;
+    left:33%;
+    top: -0.3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    display: block;
+    background-color: #ffffff;
+    text-align: center;
+    color: #4d4d4d;
+}
+.hr-title{
+    background-color: #ffffff;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+    position: relative;
+    top: 0.5rem;
+    height:1px;
+    border:none;
+    border-top:1px solid #4d4d4d;
+}
+.home-card-header{
+    padding: 0.25rem 0.25rem;
+}
+.my-green{
+    background-color: #4dc71f !important;
+}
+.my-green-text{
+   color: #4dc71f !important;
+}
+.my-green-border{
+    border:1px solid #4dc71f !important;
+    background-color: #ffffff;
+}
+.my-bottom{
+    margin-bottom: 3rem;
+}

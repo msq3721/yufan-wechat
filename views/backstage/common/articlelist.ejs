@@ -1,0 +1,60 @@
+<% include ../main/navcommom.ejs %>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap-datetimepicker.css">
+<style>
+    img{
+        max-width: 100px;
+        max-height: 100px;
+    }
+    .times{
+        width: 15%;
+    }
+</style>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>图片</th>
+        <th>标题</th>
+        <th>作者</th>
+        <th>摘要</th>
+    </tr>
+    </thead>
+   <tbody>
+   <% result.forEach(function(r){ %>
+   <form method="post" action="/bk/updatearticle?id=<%=r.id%>" >
+    <tr>
+        <td><img src="/img/<%=r.imgid%>"></td>
+        <td><a href="<%=r.url%>"><%=r.title%></a></td>
+        <td><%=r.author%></td>
+        <td><%=r.digest%></td>
+    </tr>
+
+    <tr>
+        <td><input type="text" class="form-control"  value="<%=r.imgid%>"  name="imgid"></td>
+        <td class="times"><input class="form_datetime form-control " type="text" value="<%=r.date%>" size="16" autocomplete="off" name="date"></td>
+        <td><button type="submit" class="btn btn-warning">修改</button></td>
+        <td><button type="button" class="btn btn-danger" onclick="window.location.href= '/bk/delectarticle?id=<%=r.id%>';return false">删除</button></td>
+    </tr>
+   </form>
+   <%})%>
+
+    </tbody>
+</table>
+<% include ../main/footer.ejs %>
+<script src="/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script src="/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayBtn: true,
+        todayHighlight: true,
+        showMeridian: true,
+        pickerPosition: "bottom-left",
+        language: 'zh-CN',//中文，需要引用zh-CN.js包
+        startView: 2,//月视图
+        minView: 2//日期时间选择器所能够提供的最精确的时间选择视图
+    });
+
+
+</script>

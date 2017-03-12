@@ -1,0 +1,52 @@
+<% include ../main/header.ejs %>
+
+<h1><%= title %></h1>
+
+<p>Welcome to <%=title %></p>
+<h1>demo of HTML5 form-data</h1>
+<form id="form-demo" enctype="multipart/form-data"action="javascript:">
+    <!--<label for="id-txt">要传递的文本信息</label>-->
+    <!--<input type="text" id="id-txt" name="name_txt"/>-->
+    <!--<br><br>-->
+    <label for="id-file">选择上传的文件</label>
+    <input type="file" id="id-file" name="resource" />
+    <br><br>
+    <button id="sub-btn">提交</button>
+</form> 
+<script>
+    $(document).ready(function () {
+
+        $("#sub-btn").on('click',function(){
+            /*
+             创建一个FormData对象,注意参数(可选) 一个HTML表单元素,
+             表单的信息都包含在了这个新的FromData对象中，可以在后台将它们取出:
+             --文本信息用 req.body.nameOfElement取出，如req.body.name_txt;
+             --文件信息用fs模块和path模块解析,后面会有实例
+             */
+            var formData = new FormData($("#form-demo")[0]);
+
+            //还可以用append方法添加一些附加信息参数为(name,value)，如下面的代码：
+            //formData.append('nickName','Jack');//-->后台用req.body.nickName将值'Jack'取出
+            $.ajax({
+                url: '/bk/upfood',
+                type: 'POST',
+                data: formData,//<----要传输的数据
+                async: false,
+                cache: false,
+                timeout:100,
+                contentType: false,//<----头信息设置为false
+                processData: false,
+                success: function(data){
+                    if(data.result === 'success'){
+                        alert("文件上传成功");
+                    }else if(data.result === 'fail'){
+                        alert('文件上传失败：原因是' + data.reason);
+                    }
+                },
+                error: function(xhr){
+                    alert('文件上传失败' + xhr.status);
+                }
+            });//end ajax
+        });//end event
+    });
+</script>
